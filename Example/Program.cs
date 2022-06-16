@@ -1,10 +1,8 @@
 ﻿using HTTR;
 
-var client = new HttrClient("https://www.w3schools.com/whatis/whatis_json.asp");
-var request = new HttrRequest(tagToRetrive:"img",atributeToRetrieve:"src");
+var client = new HttrClient("https://www.databazeknih.cz/knihy/brana-smrti-draci-kridlo-34968");
+var request = new HttrRequest(tagToRetrive:"h2");
+//request.AddCondition("itemprop", "name");
 var resp = client.SendRequest(request);
 
-foreach (var item in resp)
-{
-    Console.WriteLine(item);
-}
+Console.WriteLine(resp);
