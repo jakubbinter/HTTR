@@ -28,18 +28,18 @@ namespace HTTR
         }
         List<string> conditions = new List<string>();
         /// <summary>
-        /// 
+        /// Basic constructor
         /// </summary>
-        /// <param name="TagToRetrive">html tag you want to retrieve value from if not set than you wil get value from al tags</param>
+        /// <param name="TagToRetrive">html tag you want to retrieve, if not set than retrievs from al tags</param>
         /// <param name="AtributeToRetrieve">html atribute which you want to get, if not set it will retrieve value</param>
-        /// 
         public HttrRequest(string tagToRetrive="*",string atributeToRetrieve="value")
         {
             TagToRetrive = "//"+tagToRetrive;
             AtributeToRetrive = atributeToRetrieve;
         }
         /// <summary>
-        /// method that adds condition 
+        /// <summary>
+        /// Method that adds condition 
         /// </summary>
         /// <param name="atribute">name of html atribute you want to set contition for</param>
         /// <param name="eaquals">value you want the atribute to have</param>
