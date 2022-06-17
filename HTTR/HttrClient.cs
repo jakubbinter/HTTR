@@ -24,6 +24,35 @@ namespace HTTR
         /// <returns>returns string in json format withhtml tags transformed to json object</returns>
         public string SendRequest(HttrRequest request)
         {
+            /*TODO: vracet JObject i se všema atributama který má
+              PROBLEM: musim vymyslet jak upravit httrRequest aby to dávalo smysl
+              QUESTION: jak pojmenovat text v prvku? "#text" jako to je v html agility pack? protože value bude znázorňovat všechny subnody
+            {
+              "items":
+                [
+                    { 
+                        "h1":
+                        {
+                            "id":"some id"
+                            "class":"some class"
+                            "value":
+                            {
+                                "#text":"nějakej nadpis"
+                                "a":
+                                {
+                                    "href":"https://randomshit.com"
+                                    "value":
+                                    {   
+                                        "#text":"random odkaz"
+                                    }
+                                }
+                            }
+                        }
+                    }   
+                ]
+            }
+            */
+
             //initilazing basic variables
             var web = new HtmlWeb();
             var doc = web.Load(Url);
@@ -83,8 +112,8 @@ namespace HTTR
                 {
                     result[name] = ParseHTML(node.InnerHtml);         
                 }
-                else if(doc.DocumentNode.ChildNodes.Count==1)
-                {                  
+                else if(node.ParentNode.ChildNodes.Count==1&& node.NodeType==HtmlNodeType.Text)
+                {  
                     return node.InnerHtml;
                 }
                 else

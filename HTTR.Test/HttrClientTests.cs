@@ -15,6 +15,13 @@ namespace HTTR.Test
         }
 
         [TestMethod]
+        public void ParseHTML_EmptyTag_JObjectWithTagAndEmptyJObject()
+        {
+            var ExpectedResult = new JObject(new JProperty("h1",""));
+            var Result = ParseHTML("<h1></h1>");
+            Assert.AreEqual(ExpectedResult.ToString(), Result.ToString());
+        }
+        [TestMethod]
         public void ParseHTML_SimpleHtml_SimpleJObject()
         {
             var ExpectedResult = new JObject(new JProperty("h1", "test"));
