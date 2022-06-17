@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HTTR", "HTTR\HTTR.csproj", "{8B6A642F-8011-43D0-B6A2-252405083992}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HTTR", "HTTR\HTTR.csproj", "{8B6A642F-8011-43D0-B6A2-252405083992}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example", "Example\Example.csproj", "{0E9035C8-B9BD-4BFF-AC07-767EAAA27907}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example", "Example\Example.csproj", "{0E9035C8-B9BD-4BFF-AC07-767EAAA27907}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HTTR.Test", "HTTR.Test\HTTR.Test.csproj", "{3637DF01-3E31-4ACE-BC41-0A694F2F3515}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{0E9035C8-B9BD-4BFF-AC07-767EAAA27907}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E9035C8-B9BD-4BFF-AC07-767EAAA27907}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E9035C8-B9BD-4BFF-AC07-767EAAA27907}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3637DF01-3E31-4ACE-BC41-0A694F2F3515}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3637DF01-3E31-4ACE-BC41-0A694F2F3515}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3637DF01-3E31-4ACE-BC41-0A694F2F3515}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3637DF01-3E31-4ACE-BC41-0A694F2F3515}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

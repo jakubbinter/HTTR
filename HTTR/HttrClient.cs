@@ -15,6 +15,7 @@ namespace HTTR
         {
             Url = url;
         }
+        protected HttrClient() { }
 
         /// <summary>
         /// Main method for sending request and returning their value as json
@@ -26,6 +27,7 @@ namespace HTTR
             //initilazing basic variables
             var web = new HtmlWeb();
             var doc = web.Load(Url);
+            doc.OptionOutputOriginalCase = true;
             var nds = doc.DocumentNode.SelectNodes(request.TagToRetrive + request.Conditions);
             JArray retrieved = new JArray();
 
@@ -47,12 +49,12 @@ namespace HTTR
                 var obj=new JObject();
                 if (request.AtributeToRetrive == "value")
                 {
-                    obj[nodes[i].OriginalName] = ParseHTML(nodes[i].InnerHtml);
+                    obj[nodes[i].Name] = ParseHTML(nodes[i].InnerHtml);
                     retrieved.Add(obj);
                 }
                 else
                 {
-                    obj[nodes[i].OriginalName] = nodes[i].Attributes[request.AtributeToRetrive].Value;
+                    obj[nodes[i].Name] = nodes[i].Attributes[request.AtributeToRetrive].Value;
                     retrieved.Add(obj);
                 }
             }
@@ -67,15 +69,16 @@ namespace HTTR
         /// </summary>
         /// <param name="html">html string</param>
         /// <returns>JToken(either string or JObject) with inputed html transformed</returns>
-        JToken ParseHTML(string html)
+        protected JToken ParseHTML(string html)
         {
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(html);
+            doc.OptionOutputOriginalCase = true;
             var result = new JObject();
             for (int i = 0; i < doc.DocumentNode.ChildNodes.Count; i++)
             {
                 var node = doc.DocumentNode.ChildNodes[i];
-                string name = node.OriginalName;
+                string name = node.Name;
                 if (node.HasChildNodes)
                 {
                     result[name] = ParseHTML(node.InnerHtml);         
@@ -83,6 +86,10 @@ namespace HTTR
                 else if(doc.DocumentNode.ChildNodes.Count==1)
                 {                  
                     return node.InnerHtml;
+                }
+                else
+                {
+                    result[name] = node.InnerHtml;
                 }
             }
             return result;
