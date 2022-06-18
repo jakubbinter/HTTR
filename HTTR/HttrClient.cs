@@ -100,34 +100,51 @@ namespace HTTR
                 {
                     if (result.ContainsKey(name))
                     {
-                        (result[name] as JArray).Add(new JArray(ParseHTML(node.ChildNodes)));
+                        (result[name] as JArray).Add(new JObject(new JProperty("value",ParseHTML(node.ChildNodes))));
                     }
                     else
                     {
-                        result[name] = new JArray();
-                        (result[name] as JArray).Add(new JArray(ParseHTML(node.ChildNodes)));
+                        result[name] = new JArray(new JObject(new JProperty("value", ParseHTML(node.ChildNodes)))); 
                     }
                              
                 }
                 else
                 {
-                    if (result.ContainsKey(name))
+                    if (name == "#text")
                     {
-                        (result[name] as JArray).Add(node.InnerHtml);
+                        if (result.ContainsKey(name))
+                        {
+                            (result[name] as JArray).Add(node.InnerHtml);
+                        }
+                        else
+                        {
+                            result[name] = new JArray(node.InnerHtml);
+                        }
                     }
                     else
                     {
-                        result[name] = new JArray(node.InnerHtml);
+                        if (!result.ContainsKey(name))
+                        {
+                            result[name] = new JArray();
+                        }
                     }
                 }
                 for (int j = 0; j < node.Attributes.Count; j++)
                 {
                     var arr = result[node.Name] as JArray;
-                    int index = arr.IndexOf(node.Attributes[j].Name);
-                    if (index != -1)
-                        arr[index][node.Attributes[j].Name] += node.Attributes[j].Value;
-                    else
+                    if (arr.Count == 0)
+                    {
                         arr.Add(new JObject(new JProperty(node.Attributes[j].Name, node.Attributes[j].Value)));
+                        continue;
+                    }
+                    bool cont = (arr[arr.Count - 1] as JObject).ContainsKey(node.Attributes[j].Name);
+                    if (cont)
+                        (arr[arr.Count - 1] as JObject)[node.Attributes[j].Name] += node.Attributes[j].Value;
+                    else
+                    {
+                        (arr[arr.Count - 1] as JObject).Add(new JProperty(node.Attributes[j].Name, node.Attributes[j].Value));  
+                    }
+                        
                 }
             }
             return result;
