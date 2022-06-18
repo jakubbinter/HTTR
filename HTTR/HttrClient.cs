@@ -56,15 +56,15 @@ namespace HTTR
             var web = new HtmlWeb();
             var doc = web.Load(Url);
             doc.OptionOutputOriginalCase = true;
-            var nds = doc.DocumentNode.SelectNodes(request.TagToRetrive + request.Conditions);
+            var nodes = doc.DocumentNode.SelectNodes(request.TagToRetrive + request.Conditions);
             JArray retrieved = new JArray();
 
             //if nothing matches conditions return empty json
-            if (nds ==null)
+            if (nodes ==null)
                 return new JObject().ToString();
 
             //get all nodes in array
-            HtmlNode[] nodes =nds.ToArray();
+            //HtmlNode[] nodes =nds.ToArray();
             
             //for each node
             //if the atribute they want is value
@@ -72,10 +72,14 @@ namespace HTTR
             //  and add it in json format to JArray
             //else 
             //  just add the atribute they want to the JArray
-            for (int i = 0; i < nodes.Length; i++)
+            for (int i = 0; i < nodes.Count; i++)
             {
-                var obj=new JObject();
-                obj[nodes[i].Name] = ParseHTML(nodes[i].ChildNodes);
+                /*var obj=new JObject();
+                obj[nodes[i].Name] = ParseHTML(nodes[i].ChildNodes);*/
+                var dc = new HtmlDocument();
+                dc.LoadHtml(nodes[i].OuterHtml);
+                var col = dc.DocumentNode.ChildNodes;
+                var obj = ParseHTML(col);
                 retrieved.Add(obj);
             }
 

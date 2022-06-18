@@ -1,4 +1,5 @@
 using Newtonsoft.Json.Linq;
+using HtmlAgilityPack;
 
 namespace HTTR.Test
 {
@@ -10,34 +11,81 @@ namespace HTTR.Test
         public void ParseHTML_EmptyString_EmptyJObject()
         {
             var ExpectedResult = new JObject();
-            var Result = ParseHTML("");
+            var doc=new HtmlDocument();
+            doc.LoadHtml("");
+            var Result = ParseHTML(doc.DocumentNode.ChildNodes);
             Assert.AreEqual(ExpectedResult.ToString(), Result.ToString());
         }
 
         [TestMethod]
         public void ParseHTML_EmptyTag_JObjectWithTagAndEmptyJObject()
         {
-            var ExpectedResult = new JObject(new JProperty("h1",""));
-            var Result = ParseHTML("<h1></h1>");
+            var ExpectedResult = new JObject(new JProperty("h1",new JArray()));
+            var doc = new HtmlDocument();
+            doc.LoadHtml("<h1></h1>");
+            var Result = ParseHTML(doc.DocumentNode.ChildNodes);
             Assert.AreEqual(ExpectedResult.ToString(), Result.ToString());
         }
         [TestMethod]
         public void ParseHTML_SimpleHtml_SimpleJObject()
         {
-            var ExpectedResult = new JObject(new JProperty("h1", "test"));
-            var Result = ParseHTML("<h1>test</h1>");
+            //var ExpectedResult = new JObject()["h1"] =new JArray(new JObject(
+            //new JProperty("value",new JObject()["#text"]= new JArray("test"))));
+            var ExpectedResult = JObject.Parse(@"
+{
+  ""h1"": [
+    {
+                ""value"": {
+                    ""#text"": [
+                      ""test""
+                  ]
+      }
+            }
+  ]
+}"
+);
+            var doc = new HtmlDocument();
+            doc.LoadHtml("<h1>test</h1>");
+            var Result = ParseHTML(doc.DocumentNode.ChildNodes);
             Assert.AreEqual(ExpectedResult.ToString(), Result.ToString());
         }
         [TestMethod]
         public void ParseHTML_ComplexHtml_ComplexJObject()
         {
-            var ExpectedResult = new JObject(
-                new JProperty("h1", "test"),
-                new JProperty(
-                    new JProperty("p",new JObject(
-                        new JProperty("#text","test p "),
-                        new JProperty("a","test a")))));
-            var Result = ParseHTML("<h1>test</h1><p>test p <a>test a</a></p>");
+            var ExpectedResult = JObject.Parse(@"
+{
+  ""h1"": [
+    {
+                ""value"": {
+                    ""#text"": [
+                      ""test""
+                  ]
+      }
+            }
+  ],
+  ""p"": [
+    {
+                ""value"": {
+                    ""#text"": [
+                      ""test p ""
+                  ],
+        ""a"": [
+          {
+                        ""value"": {
+                            ""#text"": [
+                              ""test a""
+                          ]
+            }
+                    }
+        ]
+      }
+            }
+  ]
+}"
+);
+            var doc = new HtmlDocument();
+            doc.LoadHtml("<h1>test</h1><p>test p <a>test a</a></p>");
+            var Result = ParseHTML(doc.DocumentNode.ChildNodes);
             Assert.AreEqual(ExpectedResult.ToString(), Result.ToString());
         }
         #endregion
@@ -49,7 +97,8 @@ namespace HTTR.Test
             HttrClient client = new HttrClient("http://itcorp.com/");
             HttrRequest req = new HttrRequest("h1");
             var JObjectResult = new JObject();
-            JObjectResult["items"] = new JArray(new JObject(new JProperty("h1", "Interrupt Technology Corporation")));
+            JObjectResult["items"] = new JArray(new JObject(new JProperty("h1", new JArray(new JObject(new JProperty("value",
+                new JObject(new JProperty("#text",new JArray("Interrupt Technology Corporation")))))))));
             string ExpectedResult = JObjectResult.ToString();
             var Result = client.SendRequest(req);
             Assert.AreEqual(ExpectedResult, Result);
