@@ -9,7 +9,7 @@ namespace HTTR
     public class HttrRequest
     {
         public string TagToRetrive { get; set; }
-        public string AtributeToRetrive { get; set; }
+        //public string AtributeToRetrive { get; set; }
         public string Conditions
         {
             get
@@ -32,10 +32,10 @@ namespace HTTR
         /// </summary>
         /// <param name="TagToRetrive">html tag you want to retrieve, if not set than retrievs from al tags</param>
         /// <param name="AtributeToRetrieve">html atribute which you want to get, if not set it will retrieve value</param>
-        public HttrRequest(string tagToRetrive="*",string atributeToRetrieve="value")
+        public HttrRequest(string tagToRetrive="*"/*,string atributeToRetrieve="value"*/)
         {
             TagToRetrive = "//"+tagToRetrive;
-            AtributeToRetrive = atributeToRetrieve;
+            //AtributeToRetrive = atributeToRetrieve;
         }
         /// <summary>
         /// <summary>
