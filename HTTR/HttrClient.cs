@@ -24,34 +24,6 @@ namespace HTTR
         /// <returns>returns string in json format withhtml tags transformed to json object</returns>
         public string SendRequest(HttrRequest request)
         {
-            /*TODO: vracet JObject i se všema atributama který má
-              PROBLEM: musim vymyslet jak upravit httrRequest aby to dávalo smysl
-            {
-              "items":
-                [
-                    { 
-                        "h1":
-                        {
-                            "id":"some id"
-                            "class":"some class"
-                            "value":
-                            {
-                                "#text":"nějakej nadpis"
-                                "a":
-                                {
-                                    "href":"https://randomshit.com"
-                                    "value":
-                                    {   
-                                        "#text":"random odkaz"
-                                    }
-                                }
-                            }
-                        }
-                    }   
-                ]
-            }
-            */
-
             //initilazing basic variables
             var web = new HtmlWeb();
             var doc = web.Load(Url);
@@ -63,19 +35,10 @@ namespace HTTR
             if (nodes ==null)
                 return new JObject().ToString();
 
-            //get all nodes in array
-            //HtmlNode[] nodes =nds.ToArray();
-            
             //for each node
-            //if the atribute they want is value
-            //  then parse the inner html of the node
-            //  and add it in json format to JArray
-            //else 
-            //  just add the atribute they want to the JArray
+            //  create html document with that node and take node collection and call parseHTML
             for (int i = 0; i < nodes.Count; i++)
             {
-                /*var obj=new JObject();
-                obj[nodes[i].Name] = ParseHTML(nodes[i].ChildNodes);*/
                 var dc = new HtmlDocument();
                 dc.LoadHtml(nodes[i].OuterHtml);
                 var col = dc.DocumentNode.ChildNodes;
@@ -91,15 +54,19 @@ namespace HTTR
         /// <summary>
         /// recursive method for transforming html to json
         /// </summary>
-        /// <param name="html">html string</param>
-        /// <returns>JToken(either string or JObject) with inputed html transformed</returns>
-        protected JToken ParseHTML(HtmlNodeCollection nodes)
+        /// <param name="nodes">htmlnodecollection of nodes you want to parse</param>
+        /// <returns>JObject with inputed html transformed</returns>
+        protected JObject ParseHTML(HtmlNodeCollection nodes)
         {
             var result = new JObject();
             for (int i = 0; i < nodes.Count; i++)
             {
                 var node = nodes[i];
                 string name = node.Name;
+
+                //if there are child nodes then
+                //  either create new array and add Jobject with Jproperty containing values
+                //  or add to existing array
                 if (node.HasChildNodes)
                 {
                     if (result.ContainsKey(name))
@@ -109,9 +76,13 @@ namespace HTTR
                     else
                     {
                         result[name] = new JArray(new JObject(new JProperty("value", ParseHTML(node.ChildNodes)))); 
-                    }
-                             
+                    }          
                 }
+                //if the node is plain text
+                //  add it to JArray
+                //else
+                //  create new empty JArray
+                //  (if this happens the value is empty and we just want to have a JArray for atributes)
                 else
                 {
                     if (name == "#text")
@@ -133,6 +104,15 @@ namespace HTTR
                         }
                     }
                 }
+
+                //for each attribute in the node
+                //  if there is empty array
+                //      add new JObject with JProperty of the html tag
+                //  else 
+                //      if there is already JProperty with name of this attribute
+                //          than add value of this to it to it
+                //      else
+                //          add new JProperty containing this attribute
                 for (int j = 0; j < node.Attributes.Count; j++)
                 {
                     var arr = result[node.Name] as JArray;
