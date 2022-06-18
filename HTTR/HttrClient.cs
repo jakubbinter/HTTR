@@ -26,7 +26,6 @@ namespace HTTR
         {
             /*TODO: vracet JObject i se všema atributama který má
               PROBLEM: musim vymyslet jak upravit httrRequest aby to dávalo smysl
-              QUESTION: jak pojmenovat text v prvku? "#text" jako to je v html agility pack? protože value bude znázorňovat všechny subnody
             {
               "items":
                 [
@@ -76,16 +75,8 @@ namespace HTTR
             for (int i = 0; i < nodes.Length; i++)
             {
                 var obj=new JObject();
-                if (request.AtributeToRetrive == "value")
-                {
-                    obj[nodes[i].Name] = ParseHTML(nodes[i].InnerHtml);
-                    retrieved.Add(obj);
-                }
-                else
-                {
-                    obj[nodes[i].Name] = nodes[i].Attributes[request.AtributeToRetrive].Value;
-                    retrieved.Add(obj);
-                }
+                obj[nodes[i].Name] = ParseHTML(nodes[i].ChildNodes);
+                retrieved.Add(obj);
             }
 
             //add the JArray to the main JObject, construct json string and return this string
@@ -98,27 +89,45 @@ namespace HTTR
         /// </summary>
         /// <param name="html">html string</param>
         /// <returns>JToken(either string or JObject) with inputed html transformed</returns>
-        protected JToken ParseHTML(string html)
+        protected JToken ParseHTML(HtmlNodeCollection nodes)
         {
-            HtmlDocument doc = new HtmlDocument();
-            doc.LoadHtml(html);
-            doc.OptionOutputOriginalCase = true;
             var result = new JObject();
-            for (int i = 0; i < doc.DocumentNode.ChildNodes.Count; i++)
+            for (int i = 0; i < nodes.Count; i++)
             {
-                var node = doc.DocumentNode.ChildNodes[i];
+                var node = nodes[i];
                 string name = node.Name;
                 if (node.HasChildNodes)
                 {
-                    result[name] = ParseHTML(node.InnerHtml);         
-                }
-                else if(node.ParentNode.ChildNodes.Count==1&& node.NodeType==HtmlNodeType.Text)
-                {  
-                    return node.InnerHtml;
+                    if (result.ContainsKey(name))
+                    {
+                        (result[name] as JArray).Add(new JArray(ParseHTML(node.ChildNodes)));
+                    }
+                    else
+                    {
+                        result[name] = new JArray();
+                        (result[name] as JArray).Add(new JArray(ParseHTML(node.ChildNodes)));
+                    }
+                             
                 }
                 else
                 {
-                    result[name] = node.InnerHtml;
+                    if (result.ContainsKey(name))
+                    {
+                        (result[name] as JArray).Add(node.InnerHtml);
+                    }
+                    else
+                    {
+                        result[name] = new JArray(node.InnerHtml);
+                    }
+                }
+                for (int j = 0; j < node.Attributes.Count; j++)
+                {
+                    var arr = result[node.Name] as JArray;
+                    int index = arr.IndexOf(node.Attributes[j].Name);
+                    if (index != -1)
+                        arr[index][node.Attributes[j].Name] += node.Attributes[j].Value;
+                    else
+                        arr.Add(new JObject(new JProperty(node.Attributes[j].Name, node.Attributes[j].Value)));
                 }
             }
             return result;

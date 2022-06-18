@@ -1,7 +1,8 @@
 ﻿using HTTR;
 
-var client = new HttrClient("https://www.databazeknih.cz/knihy/brana-smrti-draci-kridlo-34968");
-var request = new HttrRequest(tagToRetrive: "h2");
+var client = new HttrClient("https://www.gymceska.cz/");
+var request = new HttrRequest(tagToRetrive: "div");
+request.AddCondition("title", "Základní informace šk. roku 2021/2022");
 var resp = client.SendRequest(request);
 
 Console.WriteLine(resp);
