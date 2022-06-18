@@ -8,3 +8,5 @@ Before this library you had 2 options:
 2) if it was serious project you started digging in to xpaths and end up insane
 
 Now with this library you can just easily send request looking like rest API calls and be happy 😊  
+
+## [Documentation](Docs/Documentation.md)
