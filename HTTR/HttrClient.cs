@@ -29,7 +29,7 @@ namespace HTTR
             var doc = web.Load(Url);
             doc.OptionOutputOriginalCase = true;
             var nodes = doc.DocumentNode.SelectNodes(request.TagToRetrive + request.Conditions);
-            JArray retrieved = new JArray();
+            JArray result = new JArray();
 
             //if nothing matches conditions return empty json
             if (nodes ==null)
@@ -43,12 +43,10 @@ namespace HTTR
                 dc.LoadHtml(nodes[i].OuterHtml);
                 var col = dc.DocumentNode.ChildNodes;
                 var obj = ParseHTML(col);
-                retrieved.Add(obj);
+                result.Add(obj);
             }
 
-            //add the JArray to the main JObject, construct json string and return this string
-            JObject result = new JObject();
-            result["items"] = retrieved;
+            //return JArray as json string
             return result.ToString();
         }
         /// <summary>

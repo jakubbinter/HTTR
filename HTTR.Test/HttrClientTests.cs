@@ -96,8 +96,7 @@ namespace HTTR.Test
         {
             HttrClient client = new HttrClient("http://itcorp.com/");
             HttrRequest req = new HttrRequest("h1");
-            var JObjectResult = new JObject();
-            JObjectResult["items"] = new JArray(new JObject(new JProperty("h1", new JArray(new JObject(new JProperty("value",
+            var JObjectResult =  new JArray(new JObject(new JProperty("h1", new JArray(new JObject(new JProperty("value",
                 new JObject(new JProperty("#text",new JArray("Interrupt Technology Corporation")))))))));
             string ExpectedResult = JObjectResult.ToString();
             var Result = client.SendRequest(req);
