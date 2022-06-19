@@ -28,7 +28,7 @@ namespace HTTR
             var web = new HtmlWeb();
             var doc = web.Load(Url);
             doc.OptionOutputOriginalCase = true;
-            var nodes = doc.DocumentNode.SelectNodes(request.TagToRetrive + request.Conditions);
+            var nodes = doc.DocumentNode.SelectNodes(request.XPath);
             JArray result = new JArray();
 
             //if nothing matches conditions return empty json
@@ -42,7 +42,7 @@ namespace HTTR
                 var dc = new HtmlDocument();
                 dc.LoadHtml(nodes[i].OuterHtml);
                 var col = dc.DocumentNode.ChildNodes;
-                var obj = ParseHTML(col);
+                var obj = ParseHTML(col,request);
                 result.Add(obj);
             }
 
@@ -54,7 +54,7 @@ namespace HTTR
         /// </summary>
         /// <param name="nodes">htmlnodecollection of nodes you want to parse</param>
         /// <returns>JObject with inputed html transformed</returns>
-        protected JObject ParseHTML(HtmlNodeCollection nodes)
+        protected JObject ParseHTML(HtmlNodeCollection nodes,HttrRequest request)
         {
             var result = new JObject();
             for (int i = 0; i < nodes.Count; i++)
@@ -69,11 +69,11 @@ namespace HTTR
                 {
                     if (result.ContainsKey(name))
                     {
-                        (result[name] as JArray).Add(new JObject(new JProperty("value",ParseHTML(node.ChildNodes))));
+                        (result[name] as JArray).Add(new JObject(new JProperty("value",ParseHTML(node.ChildNodes,request))));
                     }
                     else
                     {
-                        result[name] = new JArray(new JObject(new JProperty("value", ParseHTML(node.ChildNodes)))); 
+                        result[name] = new JArray(new JObject(new JProperty("value", ParseHTML(node.ChildNodes,request)))); 
                     }          
                 }
                 //if the node is plain text
@@ -113,6 +113,9 @@ namespace HTTR
                 //          add new JProperty containing this attribute
                 for (int j = 0; j < node.Attributes.Count; j++)
                 {
+                    //if any of tags to retrieve has attribute matching curent atribute continue else go to next atribute
+                    if (!request.TagsToRetrive.Any(x => x.TagToRetrive == node.Name && x.AttributesToRetrive.Contains(node.Attributes[j].Name)))
+                        continue;
                     var arr = result[node.Name] as JArray;
                     if (arr.Count == 0)
                     {
