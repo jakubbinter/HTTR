@@ -5,5 +5,9 @@ Welocome to HTTR documentation
 
 ## Advenced Documentation
 <details>
-docs link
+<summary>Documentation by classes</summary>
+
+[Httr Client](classes/HttrClient.md)  
+[Httr Request](classes/HttrRequest.md)  
+[Httr Tag](classes/HttrTag.md)  
 </details>
