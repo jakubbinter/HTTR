@@ -1,4 +1,4 @@
-# Documanetation for HTTR library
+# Documentation for HTTR library
 Welocome to HTTR documentation
 
 ## [Getting Started](Getting_Started.md)
