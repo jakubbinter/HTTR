@@ -1,0 +1,1 @@
+# Documentation for Httr Client class
