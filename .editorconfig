@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# CS8602: Přístup přes ukazatel k možnému odkazu s hodnotou null
+dotnet_diagnostic.CS8602.severity = none
