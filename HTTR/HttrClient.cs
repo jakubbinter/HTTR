@@ -35,13 +35,10 @@ namespace HTTR
             if (nodes ==null)
                 return new JObject().ToString();
 
-            //for each node
-            //  create html document with that node and take node collection and call parseHTML
-             
-          
+            //parse html for all nodes
             result = ParseHTML(nodes,request);
             
-            //return JArray as json string
+            //return JObject as json string
             return result.ToString();
         }
         /// <summary>
@@ -60,8 +57,8 @@ namespace HTTR
                 string name = node.Name;
                 JObject rs = null;
                 //if there are child nodes then
-                //  either create new array and add Jobject with Jproperty containing values
-                //  or add to existing array
+                //  create new JObject with name of the tag and its index
+                
                 string indexedName = name + "$" + elements.Where(x => x == name).Count();
                 if (node.HasChildNodes)
                 {
@@ -71,10 +68,10 @@ namespace HTTR
                     rs = res;
                 }
                 //if the node is plain text
-                //  add it to JArray
+                //  create new JPropert with #text and its index and with value of the text
                 //else
-                //  create new empty JArray
-                //  (if this happens the value is empty and we just want to have a JArray for atributes)
+                //  create new empty JObject
+                //  (if this happens the value is empty and we just want to have a JObject for atributes)
                 else if(name == "#text")
                 {
                     result.Add(new JProperty(indexedName, node.InnerHtml));                   
@@ -85,19 +82,18 @@ namespace HTTR
                     JObject res = result[indexedName] as JObject;
                     rs = res;
                 }
+
+                //add the tag name to list of elements
                 elements.Add(name);
                 //for each attribute in the node
-                //  if there is empty array
-                //      add new JObject with JProperty of the html tag
-                //  else 
-                //      if there is already JProperty with name of this attribute
-                //          than add value of this to it to it
-                //      else
-                //          add new JProperty containing this attribute
+                //  add its create new JProperty with name and index containing value of thet attribute
+                //  add attribute name to the list of sttributes
                 List<string> attributes = new List<string>();
                 for (int j = 0; j < node.Attributes.Count; j++)
                 {
-                    rs.Add(new JProperty(node.Attributes[j].Name + "$" + attributes.Where(x => x == node.Attributes[j].Name).Count(), node.Attributes[j].Value));
+                    string attributeName = node.Attributes[j].Name + "$" + 
+                        attributes.Where(x => x == node.Attributes[j].Name).Count();
+                    rs.Add(new JProperty(attributeName, node.Attributes[j].Value));
                     attributes.Add(node.Attributes[j].Name);    
                 }
             }
