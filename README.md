@@ -11,5 +11,5 @@ Now with this library you can just easily send request looking like rest API cal
 
 ## [Documentation](Docs/Documentation.md)
 
-## [Contribution](./CONTRIBUTION.md)
+## [Contribution](./CONTRIBUTING.md)
 
