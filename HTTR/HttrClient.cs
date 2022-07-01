@@ -63,7 +63,7 @@ namespace HTTR
             {
                 var node = nodes[i];
                 string name = node.Name;
-
+                JObject rs = null;
                 //if there are child nodes then
                 //  either create new array and add Jobject with Jproperty containing values
                 //  or add to existing array
@@ -73,6 +73,7 @@ namespace HTTR
                     result.Add(new JProperty(indexedName, new JObject()));
                     JObject res = result[indexedName] as JObject;
                     res.Add(new JProperty("value",ParseHTML(node.ChildNodes,request)));
+                    rs = res;
                 }
                 //if the node is plain text
                 //  add it to JArray
@@ -87,6 +88,7 @@ namespace HTTR
                 {
                     result.Add(new JProperty(indexedName, new JObject()));
                     JObject res = result[indexedName] as JObject;
+                    rs = res;
                 }
                 elements.Add(name);
                 //for each attribute in the node
@@ -100,24 +102,8 @@ namespace HTTR
                 List<string> attributes = new List<string>();
                 for (int j = 0; j < node.Attributes.Count; j++)
                 {
-                    //attributes.Add(node.Attributes[j].Name);
-                    //if any of tags to retrieve has attribute matching curent atribute continue else go to next atribute
-                    if (!request.TagsToRetrive.Any(x => x.TagToRetrive == node.Name && x.AttributesToRetrive.Contains(node.Attributes[j].Name)))
-                        continue;
-                    var arr = result[node.Name] as JArray;
-                    if (arr.Count == 0)
-                    {
-                        arr.Add(new JObject(new JProperty(node.Attributes[j].Name, node.Attributes[j].Value)));
-                        continue;
-                    }
-                    bool cont = (arr[arr.Count - 1] as JObject).ContainsKey(node.Attributes[j].Name);
-                    if (cont)
-                        (arr[arr.Count - 1] as JObject)[node.Attributes[j].Name] += node.Attributes[j].Value;
-                    else
-                    {
-                        (arr[arr.Count - 1] as JObject).Add(new JProperty(node.Attributes[j].Name, node.Attributes[j].Value));  
-                    }
-                        
+                    rs.Add(new JProperty(node.Attributes[j].Name + "$" + attributes.Where(x => x == node.Attributes[j].Name).Count(), node.Attributes[j].Value));
+                    attributes.Add(node.Attributes[j].Name);    
                 }
             }
             return result;

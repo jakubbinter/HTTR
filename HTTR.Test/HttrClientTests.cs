@@ -71,7 +71,21 @@ namespace HTTR.Test
             var Result = ParseHTML(doc.DocumentNode.ChildNodes,new HttrRequest(new HttrTag("div")));
             Assert.AreEqual(ExpectedResult.ToString(), Result.ToString());
         }
+        [TestMethod]
+        public void ParseHTML_SimpleHtmlWithAttributes_SimpleJObject()
+        {
+            var ExpectedResult = new JObject(new JProperty("h1$0", new JObject(
+                new JProperty("value",
+                    new JObject(
+                        new JProperty("#text$0", "test"))), 
+                        new JProperty("class$0", "test"),
+                        new JProperty("class$1", "test2"))));
 
+            var doc = new HtmlDocument();
+            doc.LoadHtml("<h1 class=\"test\" class=\"test2\">test</h1>");
+            var Result = ParseHTML(doc.DocumentNode.ChildNodes, new HttrRequest(new HttrTag("div")));
+            Assert.AreEqual(ExpectedResult.ToString(), Result.ToString());
+        }
         #endregion
 
         #region SendRequest Tests
