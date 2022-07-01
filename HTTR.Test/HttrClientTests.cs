@@ -16,7 +16,6 @@ namespace HTTR.Test
             var Result = ParseHTML(doc.DocumentNode.ChildNodes, new HttrRequest(new HttrTag("div")));
             Assert.AreEqual(ExpectedResult.ToString(), Result.ToString());
         }
-
         [TestMethod]
         public void ParseHTML_EmptyTag_JObjectWithTagAndEmptyJObject()
         {
@@ -94,8 +93,8 @@ namespace HTTR.Test
         {
             HttrClient client = new HttrClient("http://itcorp.com/");
             HttrRequest req = new HttrRequest(new HttrTag("h1"));
-            var JObjectResult =  new JArray(new JObject(new JProperty("h1", new JArray(new JObject(new JProperty("value",
-                new JObject(new JProperty("#text",new JArray("Interrupt Technology Corporation")))))))));
+            var JObjectResult =  new JObject(new JProperty("h1$0", new JObject(new JProperty("value",
+                new JObject(new JProperty("#text$0","Interrupt Technology Corporation"))))));
             string ExpectedResult = JObjectResult.ToString();
             var Result = client.SendRequest(req);
             Assert.AreEqual(ExpectedResult, Result);

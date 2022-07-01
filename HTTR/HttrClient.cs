@@ -29,7 +29,7 @@ namespace HTTR
             var doc = web.Load(Url);
             doc.OptionOutputOriginalCase = true;
             var nodes = doc.DocumentNode.SelectNodes(request.XPath);
-            JArray result = new JArray();
+            JObject result = new JObject();
 
             //if nothing matches conditions return empty json
             if (nodes ==null)
@@ -37,15 +37,10 @@ namespace HTTR
 
             //for each node
             //  create html document with that node and take node collection and call parseHTML
-            for (int i = 0; i < nodes.Count; i++)
-            {
-                var dc = new HtmlDocument();
-                dc.LoadHtml(nodes[i].OuterHtml);
-                var col = dc.DocumentNode.ChildNodes;
-                var obj = ParseHTML(col,request);
-                result.Add(obj);
-            }
-
+             
+          
+            result = ParseHTML(nodes,request);
+            
             //return JArray as json string
             return result.ToString();
         }
