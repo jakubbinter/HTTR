@@ -57,6 +57,8 @@ namespace HTTR
         protected JObject ParseHTML(HtmlNodeCollection nodes,HttrRequest request)
         {
             var result = new JObject();
+            List<string> elements=new List<string>();
+            
             for (int i = 0; i < nodes.Count; i++)
             {
                 var node = nodes[i];
@@ -65,44 +67,28 @@ namespace HTTR
                 //if there are child nodes then
                 //  either create new array and add Jobject with Jproperty containing values
                 //  or add to existing array
+                string indexedName = name + "$" + elements.Where(x => x == name).Count();
                 if (node.HasChildNodes)
                 {
-                    if (result.ContainsKey(name))
-                    {
-                        (result[name] as JArray).Add(new JObject(new JProperty("value",ParseHTML(node.ChildNodes,request))));
-                    }
-                    else
-                    {
-                        result[name] = new JArray(new JObject(new JProperty("value", ParseHTML(node.ChildNodes,request)))); 
-                    }          
+                    result.Add(new JProperty(indexedName, new JObject()));
+                    JObject res = result[indexedName] as JObject;
+                    res.Add(new JProperty("value",ParseHTML(node.ChildNodes,request)));
                 }
                 //if the node is plain text
                 //  add it to JArray
                 //else
                 //  create new empty JArray
                 //  (if this happens the value is empty and we just want to have a JArray for atributes)
+                else if(name == "#text")
+                {
+                    result.Add(new JProperty(indexedName, node.InnerHtml));                   
+                }
                 else
                 {
-                    if (name == "#text")
-                    {
-                        if (result.ContainsKey(name))
-                        {
-                            (result[name] as JArray).Add(node.InnerHtml);
-                        }
-                        else
-                        {
-                            result[name] = new JArray(node.InnerHtml);
-                        }
-                    }
-                    else
-                    {
-                        if (!result.ContainsKey(name))
-                        {
-                            result[name] = new JArray();
-                        }
-                    }
+                    result.Add(new JProperty(indexedName, new JObject()));
+                    JObject res = result[indexedName] as JObject;
                 }
-
+                elements.Add(name);
                 //for each attribute in the node
                 //  if there is empty array
                 //      add new JObject with JProperty of the html tag
@@ -111,8 +97,10 @@ namespace HTTR
                 //          than add value of this to it to it
                 //      else
                 //          add new JProperty containing this attribute
+                List<string> attributes = new List<string>();
                 for (int j = 0; j < node.Attributes.Count; j++)
                 {
+                    //attributes.Add(node.Attributes[j].Name);
                     //if any of tags to retrieve has attribute matching curent atribute continue else go to next atribute
                     if (!request.TagsToRetrive.Any(x => x.TagToRetrive == node.Name && x.AttributesToRetrive.Contains(node.Attributes[j].Name)))
                         continue;
