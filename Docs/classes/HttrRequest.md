@@ -21,7 +21,7 @@ HttrRequest request=new HttrRequest(tagsToRetrive,shouldretrieve);
 ```
 creates new HttrRequest instance with multiple HttrTag
 >Parameters:
->- <font color="DodgerBlue">List<[HttrTag](./HttrTag.md)></font>``` tagsToRetrive``` - List of HttrTag objects containing specifications of tags you want to get 
+>- <font color="DodgerBlue">List<[HttrTag](./HttrTag.md)></font> ```tagsToRetrive``` - List of HttrTag objects containing specifications of tags you want to get 
 >- <font color="DodgerBlue">bool</font> ```retrieveAttributes``` - bool indicating if the response should contain attributes
   
 ## Propreties
