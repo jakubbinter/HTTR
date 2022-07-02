@@ -1,5 +1,5 @@
 # Getting Started Guide
->to get started, first clone this repo, build it and then add reference to created dll to your project, where you want to use this library  
+>to get started, download Build folder from this repo and then in your project add reference to HTTR.dll  
 
 this code will return all divs that have class caled container from website https://github.com/jakubbinter/HTTR, the json will  contain all attribbutes
 
