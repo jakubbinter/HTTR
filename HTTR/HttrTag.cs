@@ -42,10 +42,6 @@ namespace HTTR
         /// Basic Constructor
         /// </summary>
         /// <param name="tagToRetrive">tag this object will retrieve</param>
-        /// <param name="isInnerTag">describing if this tag should get retrived 
-        /// if set to true this tag wil get ignored by the XPath and wil not be retrived
-        /// and will only serve to describe attributes you want to get if this tag will be inside of some retrived tag</param>
-        /// <param name="attributesToRetrieve">attributes you want to retriev with this tag if not set you wil only get value of the tag</param>
         public HttrTag(string tagToRetrive)
         {
             TagToRetrive = tagToRetrive;

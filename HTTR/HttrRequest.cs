@@ -26,14 +26,19 @@ namespace HTTR
         /// <summary>
         /// Basic constructor
         /// </summary>
-        /// <param name="TagToRetrive">html tag you want to retrieve, if not set than retrievs from al tags</param>
-        /// <param name="AtributeToRetrieve">html atribute which you want to get, if not set it will retrieve value</param>
+        /// <param name="tagToRetrive">html tag you want to retrieve</param>
+        /// <param name="retrieveAttributes">bool indicating if the outputed json will contain attributes</param>
         public HttrRequest(HttrTag tagToRetrive, bool retrieveAttributes = true)
         {
             TagsToRetrive = new List<HttrTag>();
             TagsToRetrive.Add(tagToRetrive);
             RetrieveAttributes = retrieveAttributes;
         }
+        /// <summary>
+        /// Basic constructor
+        /// </summary>
+        /// <param name="tagsToRetrive">list of html tags you want to retrieve</param>
+        /// <param name="retrieveAttributes">bool indicating if the outputed json will contain attributes</param>
         public HttrRequest(List<HttrTag> tagsToRetrive, bool retrieveAttributes=true)
         {
             TagsToRetrive = new List<HttrTag>();

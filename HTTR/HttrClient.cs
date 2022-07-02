@@ -72,7 +72,7 @@ namespace HTTR
                 //else
                 //  create new empty JObject
                 //  (if this happens the value is empty and we just want to have a JObject for atributes)
-                else if(name == "#text")
+                else if(name[0]=='#')
                 {
                     result.Add(new JProperty(indexedName, node.InnerHtml));                   
                 }
