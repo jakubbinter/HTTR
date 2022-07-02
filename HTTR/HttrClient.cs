@@ -88,6 +88,8 @@ namespace HTTR
                 //for each attribute in the node
                 //  add its create new JProperty with name and index containing value of thet attribute
                 //  add attribute name to the list of sttributes
+                if (!request.RetrieveAttributes)
+                    continue;
                 List<string> attributes = new List<string>();
                 for (int j = 0; j < node.Attributes.Count; j++)
                 {

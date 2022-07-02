@@ -9,6 +9,7 @@ namespace HTTR
     public class HttrRequest
     {
         public List<HttrTag> TagsToRetrive { get; set; }
+        public bool RetrieveAttributes { get; set; }
         public string XPath
         {
             get
@@ -16,8 +17,6 @@ namespace HTTR
                 string result = "";
                 for (int i = 0; i < TagsToRetrive.Count; i++)
                 {
-                    if (TagsToRetrive[i].IsInnerTag)
-                        continue;
                     result+=TagsToRetrive[i].XPath+" | ";
                 }
                 result = result.Remove(result.Length - 3);
@@ -29,16 +28,17 @@ namespace HTTR
         /// </summary>
         /// <param name="TagToRetrive">html tag you want to retrieve, if not set than retrievs from al tags</param>
         /// <param name="AtributeToRetrieve">html atribute which you want to get, if not set it will retrieve value</param>
-        public HttrRequest(HttrTag tagToRetrive)
+        public HttrRequest(HttrTag tagToRetrive, bool retrieveAttributes = true)
         {
             TagsToRetrive = new List<HttrTag>();
             TagsToRetrive.Add(tagToRetrive);
+            RetrieveAttributes = retrieveAttributes;
         }
-        public HttrRequest(List<HttrTag> tagsToRetrive)
+        public HttrRequest(List<HttrTag> tagsToRetrive, bool retrieveAttributes=true)
         {
             TagsToRetrive = new List<HttrTag>();
             TagsToRetrive.AddRange(tagsToRetrive);
+            RetrieveAttributes= retrieveAttributes;
         }
-
     }
 }
