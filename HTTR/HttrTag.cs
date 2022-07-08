@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace HTTR
 {
-    public class HttrTag
+    public class HttrTag:HttrSelector
     {
-        public string XPath 
+        public override string XPath 
         {
             get
             {
