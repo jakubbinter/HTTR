@@ -5,10 +5,24 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+	<Authors>Jakub Binter</Authors>
+	<PackageId>HTTR</PackageId>
+	<Company />
+	<Product>HTTR</Product>
+	<Description>c# library for sending request to html websites and getting rest-like response in json format</Description>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<PackageProjectUrl></PackageProjectUrl>
+	<RepositoryUrl>https://github.com/jakubbinter/HTTR</RepositoryUrl>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<PackageTags>html; rest; web scraping; web scraper</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
