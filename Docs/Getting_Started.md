@@ -23,9 +23,16 @@ var request=new HttrRequest(tag);
 to this
 ```c#
 var request=new HttrRequest(tag,false);
-```
+```  
 
-in the first case the json response will look like this
+$~$
+
+> in VB you can use the same methods as in c#, look at [Visual Basic Example](../ExampleVB/Program.vb) 
+
+$~$
+ 
+in the first case the json response will look like this  
+
 ```json
 {
   "p$0": {
