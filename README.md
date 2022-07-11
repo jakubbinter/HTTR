@@ -10,6 +10,8 @@ Before this library you had basically 2 options:
 
 Now with this library you can just easily send request looking like rest API calls, get json response and be happy 😊  
 
+## [Getting Started](Docs/Getting_Started.md)
+
 ## [Documentation](Docs/Documentation.md)
 
 ## [Contribution](./CONTRIBUTING.md)
