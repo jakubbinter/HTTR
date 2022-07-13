@@ -4,11 +4,11 @@ Class containing info about request sent to website
 ## Methods
 ### Constructors
 ```c#
-HttrRequest request=new HttrRequest(tagToRetrive,shouldretrieve);
+HttrRequest request=new HttrRequest(selector, shouldretrieve);
 ```
 creates new HttrRequest instance with one HttrTag
 >Parameters:
->- [HttrTag](./HttrTag.md) ```tagToRetrive``` - HttrTag object containing specifications of the tag you want to get 
+>- [HttrSelector](./HttrSelector.md) ```selector``` - HttrSelector object containing  specifications for the retrieved tags 
 >- <font color="DodgerBlue">bool</font> ```retrieveAttributes``` - bool indicating if the response should contain attributes
 
 $~$
@@ -17,20 +17,20 @@ $~$
 $~$
 
 ```c#
-HttrRequest request=new HttrRequest(tagsToRetrive,shouldretrieve);
+HttrRequest request=new HttrRequest(selectors, shouldretrieve);
 ```
 creates new HttrRequest instance with multiple HttrTag
 >Parameters:
->- <font color="DodgerBlue">List<[HttrTag](./HttrTag.md)></font> ```tagsToRetrive``` - List of HttrTag objects containing specifications of tags you want to get 
+>- <font color="DodgerBlue">List<[HttrSelector](./HttrSelector.md)></font> ```selectors``` - List of HttrSelector objects containing specifications for the retrieved tags 
 >- <font color="DodgerBlue">bool</font> ```retrieveAttributes``` - bool indicating if the response should contain attributes
   
 ## Propreties
 
-### TagsToRetrive
+### Selectors
 ```c#
-public List<HttrTag> TagsToRetrive { get; set; }
+public List<HttrSelector> Selectors { get; set; }
 ```
-List of HttrTag objects that will be retrieved from the website
+List of HttrSelector objects that will set conditions for the retrieved tags
   
 ### RetrieveAttributes
 ```c#

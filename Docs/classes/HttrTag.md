@@ -1,4 +1,4 @@
-# Httr Tag
+# Httr Tag : [HttrSelector](./HttrSelector.md)
 Class representing Html tag
 ## Methods
 ### Constructor
@@ -29,6 +29,6 @@ Name of html tag this class is refering to
 
 ### XPath
 ```c#
-public string XPath { get;}
+public override string XPath { get;}
 ```
 XPath to this tag in html document 
