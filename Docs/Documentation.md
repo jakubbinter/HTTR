@@ -7,7 +7,9 @@ Welocome to HTTR documentation
 <details>
 <summary>Documentation by classes</summary>
 
-[Httr Client](classes/HttrClient.md)  
-[Httr Request](classes/HttrRequest.md)  
-[Httr Tag](classes/HttrTag.md)  
+[Httr Client](./classes/HttrClient.md)  
+[Httr Request](./classes/HttrRequest.md)  
+[HttrSelector](./classes/HttrSelector.md)  
+[Httr Tag](./classes/HttrTag.md)  
+[HttrXPathSelector](./classes/HttrXPathSelector.md)  
 </details>
