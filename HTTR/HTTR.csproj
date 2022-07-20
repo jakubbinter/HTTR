@@ -12,23 +12,27 @@
 	<Description>c# library for sending request to html websites and getting rest-like response in json format</Description>
 	<PackageProjectUrl></PackageProjectUrl>
 	<RepositoryUrl>https://github.com/jakubbinter/HTTR</RepositoryUrl>
-	<PackageReadmeFile>README.md</PackageReadmeFile>
-	<PackageTags>html; rest; web scraping; web scraper</PackageTags>
+	<PackageReadmeFile>README_NUGET.md</PackageReadmeFile>
+	<PackageTags>html; rest; web; scraping;  scraper</PackageTags>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<Copyright>Copyright (c) 2022 Jakub Binter </Copyright>
+	<Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
-    <None Include="..\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack" Version="1.11.43" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="README_NUGET.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
