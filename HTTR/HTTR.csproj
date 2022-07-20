@@ -15,6 +15,7 @@
 	<PackageReadmeFile>README.md</PackageReadmeFile>
 	<PackageTags>html; rest; web scraping; web scraper</PackageTags>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<Copyright>Copyright (c) 2022 Jakub Binter </Copyright>
   </PropertyGroup>
 
   <ItemGroup>

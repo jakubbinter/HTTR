@@ -4,7 +4,7 @@ using HtmlAgilityPack;
 namespace HTTR.Test
 {
     [TestClass]
-    public class HttrClientTests:HttrClient
+    public class HttrClientTests:HttrParser
     {
         #region ParseHTML Tests
         [TestMethod]
@@ -97,6 +97,19 @@ namespace HTTR.Test
                 new JObject(new JProperty("#text$0","Interrupt Technology Corporation"))))));
             string ExpectedResult = JObjectResult.ToString();
             var Result = client.SendRequest(req);
+            Assert.AreEqual(ExpectedResult, Result);
+        }
+        #endregion
+
+        #region GetJsonFromString Tests
+        public void GetJsonFromString_SimpleRequest_ValidJson()
+        {
+            HttrParser parser = new HttrParser("<h1>Interrupt Technology Corporation</h1>");
+            HttrRequest req = new HttrRequest(new HttrTag("h1"));
+            var JObjectResult = new JObject(new JProperty("h1$0", new JObject(new JProperty("value",
+                new JObject(new JProperty("#text$0", "Interrupt Technology Corporation"))))));
+            string ExpectedResult = JObjectResult.ToString();
+            var Result = parser.GetJsonFromString(req);
             Assert.AreEqual(ExpectedResult, Result);
         }
         #endregion
