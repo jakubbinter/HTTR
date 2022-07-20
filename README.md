@@ -1,6 +1,6 @@
 # HTTR - Html to rest
 c# library for sending request to html websites and getting rest-like response in json format  
-nuget package: https://www.nuget.org/packages/HTTR/1.0.0
+nuget package: https://www.nuget.org/packages/HTTR/
 
 ## Use Case
 Imagine you have a service which you want to get data from but it does not have any API.  
