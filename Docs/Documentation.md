@@ -7,6 +7,7 @@ Welocome to HTTR documentation
 <details>
 <summary>Documentation by classes</summary>
 
+[Httr Parser](./classes/HttrParser.md)  
 [Httr Client](./classes/HttrClient.md)  
 [Httr Request](./classes/HttrRequest.md)  
 [HttrSelector](./classes/HttrSelector.md)  
